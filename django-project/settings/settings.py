@@ -69,9 +69,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'settings.wsgi.application'
 
 import ldap
-from django_auth_ldap.config import LDAPSearch
+from django_auth_ldap.config import LDAPSearch, PosixGroupType
 
 AUTH_LDAP_SERVER_URI = "ldap://yeomans.io"
+
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=groups,dc=yeomans,dc=io",
+    ldap.SCOPE_SUBTREE, "(objectClass=posixGroup)"
+)
+AUTH_LDAP_GROUP_TYPE = PosixGroupType()
+AUTH_LDAP_CACHE_GROUPS = True
+
+####Replace with proper group name for the website you are working on.  Group should be created in yeomans.io ldap admin, contact jason@yeomans.us to add a group
+AUTH_LDAP_REQUIRE_GROUP = "cn=GROUPNAMEHEREdjango,ou=groups,dc=yeomans,dc=io"
 
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
